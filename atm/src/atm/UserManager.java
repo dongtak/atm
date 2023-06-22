@@ -37,7 +37,7 @@ public class UserManager {
 		if (!duplId(id)) {
 			User user = new User(userCode, name, id, password);
 			this.list.add(user);
-//			accManager.createAccount(user);
+			accManager.createAccount(user);
 			System.out.println("회원가입 완료");
 		} else {
 			System.err.println("중복되는 아이디 입니다.");
@@ -45,18 +45,12 @@ public class UserManager {
 	}
 
 	public int leaveUser(int log) {
-		int n = 0;
 		for (User user : this.list) {
-			System.out.println(user.getUserCode());
-			System.out.println(log);
 			if (user.getUserCode() == log) {
-				// 어떻게 삭제해
-				this.list.remove(n);
-				System.out.println(n);
+				this.list.remove(user);
 				System.out.println("삭제완료");
 				break;
 			}
-			n++;
 		}
 		return 0;
 

@@ -45,8 +45,8 @@ public class Atm {
 	}
 
 	private void printMenu() {
-		System.out.printf("--- %s BANK ---\n", this.brandName);
-		System.out.printf("--- %d ---\n", this.log);
+		System.out.printf("--- %s ---\n", this.brandName);
+		System.out.printf("로그인상태 : %d\n", this.log);
 		System.out.println("1. 회원가입"); // 0
 		System.out.println("2. 회원탈퇴");
 		System.out.println("3. 로그인");// 0
@@ -78,6 +78,7 @@ public class Atm {
 	private void printAlldata() {
 		for (User user : this.userManager.getList())
 			System.out.println(user);
+
 	}
 
 	public void run() {
@@ -98,16 +99,16 @@ public class Atm {
 					this.log = userManager.logoutUser();
 				else if (select == CREATE_ACC)
 					accManager.createAccount(userManager.getUserByUserCode(this.log));
-//				else if(select == DELETE_ACC)
-//					accManager.deleteAcc();
-//				else if(select == VIEW_BALANCE)
-//					accManager.viewBalance();
-//				else if(select == INPUT_MONEY)
-//					accManager.inputMoney();
-//				else if(select == OUT_MONEY)
-//					accManager.outMoney();
-//				else if(select == MOVE_MONEY)
-//					accManager.moveMoney();
+				else if (select == DELETE_ACC)
+					accManager.deleteAcc(this.log);
+				else if (select == VIEW_BALANCE)
+					accManager.viewBalance(this.log);
+				else if (select == INPUT_MONEY)
+					accManager.inputMoney();
+				else if (select == OUT_MONEY)
+					accManager.outMoney();
+				else if (select == MOVE_MONEY)
+					accManager.moveMoney();
 //				else if(select == SAVE_FILE)
 //					fileManager.saveFile();
 //				else if(select == LOAD_FILE)
