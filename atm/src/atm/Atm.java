@@ -1,118 +1,117 @@
+
 package atm;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.Scanner;
 
+/*
+ * ATM 예제 만들기 
+ * ㄴ 회원관리 (가입/탈퇴/로그인/로그아웃)
+ * ㄴ 계좌관리 (계약/철회/조회)
+ * ㄴ 뱅킹서비스 (입금/인출/이체)
+ * ㄴ 파일처리 (저장/로드)
+ */
+
 public class Atm {
-	public static final Scanner sc = new Scanner(System.in);
+
+	private final int JOIN = 1;
+	private final int LEAVE = 2;
+	private final int LOGIN = 3;
+	private final int LOGOUT = 4;
+	private final int CREATE_ACC = 5;
+	private final int DELETE_ACC = 6;
+	private final int VIEW_BALANCE = 7;
+	private final int INPUT_MONEY = 8;
+	private final int OUT_MONEY = 9;
+	private final int MOVE_MONEY = 10;
+	private final int SAVE_FILE = 11;
+	private final int LOAD_FILE = 12;
+	private final int QUIT = 13;
+
+	public static final Scanner scanner = new Scanner(System.in);
 
 	private String brandName;
-	private Calendar cal;
-	private SimpleDateFormat sdf;
-	private UserManager um;
-	private AccountManager am;
-	private FileManager fm;
 
-	private final int USERMANAGE = 1;
-	private final int ACCMANAGE = 2;
-	private final int BANKING = 3;
-	private final int FILEMANAGE = 4;
-	private final int QUIT = 5;
+	private UserManager userManager;
+	private AccountManager accManager;
+	private FileManager fileManager;
 
 	private int log;
-	private int sel;
 
 	public Atm(String brandName) {
 		this.brandName = brandName;
-		this.um = UserManager.getInstance();
-		this.am = AccountManager.getInstance();
-		this.fm = FileManager.getInstance();
-	}
-
-	// 초기화
-	private void init() {
-		this.cal = Calendar.getInstance();
-		this.sdf = new SimpleDateFormat("YYYY년 MM월 dd일 E요일 HH:mm");
-	}
-
-	// 실행
-	public void run() {
-		init();
-		while (isRun()) {
-			currentTime();
-			printAlldata();
-			printMenu();
-			selectMenu();
-			if (this.sel == USERMANAGE) {
-				this.um.runUm();
-			} else if (this.sel == ACCMANAGE) {
-				this.am.run();
-			} else if (this.sel == BANKING) {
-
-			} else if (this.sel == FILEMANAGE) {
-
-			}
-		}
-	}
-
-	private void printAlldata() {
-		try {
-			System.out.println("회원목록:");
-			for (User user : um.getList())
-				System.out.println(user);
-			System.out.println("------------");
-		} catch (NullPointerException e) {
-			// TODO: handle exception
-		}
-
-	}
-
-	private boolean isRun() {
-		if (this.sel == QUIT) {
-			System.out.println("-뿅-");
-			return false;
-		}
-		return true;
+		this.userManager = UserManager.getInstance();
+		this.accManager = AccountManager.getInstance();
+		this.fileManager = FileManager.getInstace();
 	}
 
 	private void printMenu() {
-		System.out.println(this.brandName);
-//		System.out.println("로그인상태:" + this.log);
-		System.out.println("[1]회원관리");
-		System.out.println("[2]계좌관리");
-		System.out.println("[3]뱅킹서비스");
-		System.out.println("[4]파일처리");
-		System.out.println("[5]종료");
+		System.out.printf("--- %s BANK ---\n", this.brandName);
+		System.out.printf("--- %d ---\n", this.log);
+		System.out.println("1. 회원가입"); // 0
+		System.out.println("2. 회원탈퇴");
+		System.out.println("3. 로그인");// 0
+		System.out.println("4. 로그아웃");
+		System.out.println("5. 계좌개설");
+		System.out.println("6. 계좌철회");
+		System.out.println("7. 계좌조회");
+		System.out.println("8. 입금");
+		System.out.println("9. 출금");
+		System.out.println("10. 이체");
+		System.out.println("11. 저장");
+		System.out.println("12. 로드");
+		System.out.println("13. 종료");
 	}
 
-	private void selectMenu() {
-		System.out.print("메뉴선택>");
-		while (true) {
-			String sel = sc.next();
-			try {
-				this.sel = Integer.parseInt(sel);
-				if (this.sel > 0 && this.sel < 6) {
-					break;
-				} else {
-					System.err.println("범위초과");
-				}
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.err.println("숫자 입력");
-			}
+	public static int inputNumber(String msg) {
+		System.out.print(msg + " : ");
+		String input = scanner.next();
+
+		int number = -1;
+		try {
+			number = Integer.parseInt(input);
+		} catch (Exception e) {
+			System.err.println("숫자 입력만 가능합니다.");
 		}
+		return number;
 	}
 
-	public Atm(int log) {
-		this.log = log;
+	private void printAlldata() {
+		for (User user : this.userManager.getList())
+			System.out.println(user);
 	}
 
-	// 맻시고?
-	private void currentTime() {
-		String text = this.sdf.format(cal.getTime());
-		System.out.println(text);
+	public void run() {
+		while (true) {
+			printAlldata(); // 검토용
+			printMenu();
+			int select = inputNumber("메뉴");
+			if (select == JOIN && this.log == 0)
+				userManager.joinUser();
+			else if (select == LEAVE)
+				this.log = userManager.leaveUser(this.log);
+			else if (select == LOGIN && this.log == 0)
+				this.log = userManager.loginUser();
+			else if (select == LOGOUT)
+				this.log = userManager.logoutUser();
+			else if (select == CREATE_ACC)
+				accManager.createAccount(userManager.getUserByUserCode(this.log));
+//			else if(select == DELETE_ACC)
+//				accManager.deleteAcc();
+//			else if(select == VIEW_BALANCE)
+//				accManager.viewBalance();
+//			else if(select == INPUT_MONEY)
+//				accManager.inputMoney();
+//			else if(select == OUT_MONEY)
+//				accManager.outMoney();
+//			else if(select == MOVE_MONEY)
+//				accManager.moveMoney();
+//			else if(select == SAVE_FILE)
+//				fileManager.saveFile();
+//			else if(select == LOAD_FILE)
+//				fileManager.loadFile();
+//			else if(select == QUIT)
+//				break;
+		}
 	}
 
 }
