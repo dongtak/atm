@@ -45,11 +45,13 @@ public class UserManager {
 	}
 
 	public int leaveUser(int log) {
+		int n = 0;
 		for (User user : this.list) {
 			if (user.getUserCode() == log) {
-				this.list.removeAll(this.list);
+				this.list.remove(n);
 				System.out.println("삭제완료");
 			}
+			n++;
 		}
 		return 0;
 	}
@@ -69,10 +71,9 @@ public class UserManager {
 					return user.getUserCode();// 로그인 성공시 로그값 리턴
 				}
 			}
-			
 
 		}
-		return -1;// 아니면 -1
+		return 0;// 아니면 -1
 
 	}
 
