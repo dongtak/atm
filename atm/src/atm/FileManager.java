@@ -12,12 +12,24 @@ public class FileManager {
 	private FileReader fr;
 	private BufferedReader br;
 
-	private FileManager() {}
+	private int sel;
+	private final int QUIT = 5;
+
+	private FileManager() {
+	}
 
 	private static FileManager instance = new FileManager();
 
 	public static FileManager getInstance() {
 		return instance;
+	}
+
+	private boolean isRun() {
+		if (this.sel == QUIT) {
+			System.out.println("-뿅-");
+			return false;
+		}
+		return true;
 	}
 
 }

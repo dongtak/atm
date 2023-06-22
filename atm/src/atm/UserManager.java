@@ -8,9 +8,12 @@ public class UserManager {
 	// design pattern 설계 패턴
 	// 23가지
 	// https://medium.com/geekculture/23-java-design-patterns-c1ff40faa5cd
-	public static final Scanner sc = new Scanner(System.in);
-
-	private final int LOGOUT = -1;
+	private final int OFFLINE = -1;
+	private final int JOIN = 1;
+	private final int LEAVE = 2;
+	private final int LOGIN = 3;
+	private final int LOGOUT = 4;
+	private final int QUIT = 5;
 	private ArrayList<User> list;
 
 	private int size;
@@ -20,25 +23,30 @@ public class UserManager {
 
 	public void runUm() {
 		init();
-		while (true) {
+		while (isRun()) {
 			printMenu();
 			selectMenu();
-			if (this.log == this.LOGOUT) {
-				if (this.sel == 1) {
+			if (this.log == this.OFFLINE) {
+				if (this.sel == JOIN) {
 					join();
-				} else if (this.sel == 3) {
+				} else if (this.sel == LOGIN) {
 					logIn();
 				}
-			} else if (this.sel == 2) {
+			} else if (this.sel == LEAVE) {
 				leave();
-			} else if (this.sel == 4) {
+			} else if (this.sel == LOGOUT) {
 				logOut();
 			}
-			if (this.sel == 5) {
-				break;
-			}
+
 		}
 
+	}
+
+	private boolean isRun() {
+		if (this.sel == QUIT) {
+			return false;
+		}
+		return true;
 	}
 
 	// 메뉴출력
@@ -56,7 +64,7 @@ public class UserManager {
 	private void selectMenu() {
 		System.out.print("메뉴선택>");
 		while (true) {
-			String sel = sc.next();
+			String sel = Atm.sc.next();
 			try {
 				this.sel = Integer.parseInt(sel);
 				if (this.sel > 0 && this.sel < 6) {
@@ -73,9 +81,10 @@ public class UserManager {
 
 	// 초기화
 	private void init() {
+		this.sel = 0;
 		this.list = new ArrayList<>();
 		this.size = 0;
-		this.log = this.LOGOUT;
+		this.log = this.OFFLINE;
 		this.exist = false;
 	}
 
@@ -87,19 +96,18 @@ public class UserManager {
 	private void join() {
 		System.out.println("회원가입");
 		System.out.println("아이디>");
-		String uid = sc.next();
+		String uid = Atm.sc.next();
 		if (this.size > 0)
 			findId(uid);// 아이디 조회
 
 		if (!this.exist) {// 입력아이디가 존재하지 않는경우
-			this.exist = false;
 			System.out.println("비밀번호>");
-			String pwd = sc.next();
+			String pwd = Atm.sc.next();
 
 			System.out.println("이름>");
-			String name = sc.next();
+			String name = Atm.sc.next();
 			while (true) {
-				int code = (int) (Math.random() * 8999) + 1000;
+				int code = (int) (Math.random() * 9000) + 1000;
 				findCode(code);
 				if (!this.exist) {
 					System.out.println("당신의 코드는 : " + code + "입니다");
@@ -115,7 +123,7 @@ public class UserManager {
 			this.size++;// 사실상 가입인원 수 카운트용
 		} else
 
-			System.out.println("이미 있는데요");
+			System.out.println("이미 존재하는 아이디");
 
 	}
 
@@ -130,9 +138,9 @@ public class UserManager {
 	// 로그인
 	private void logIn() {
 		System.out.println("아이디>");
-		String uid = sc.next();
+		String uid = Atm.sc.next();
 		System.out.println("비밀번호>");
-		String pwd = sc.next();
+		String pwd = Atm.sc.next();
 
 		for (int i = 0; i < this.size; i++) {
 			// getId , getPwd 로 조회
@@ -142,8 +150,8 @@ public class UserManager {
 			}
 
 		}
-		if (this.log == this.LOGOUT) {
-			System.out.println("반사");
+		if (this.log == this.OFFLINE) {
+			System.err.println("아이디/비밀번호가 틀렸습니다");
 		}
 
 	}
@@ -156,6 +164,7 @@ public class UserManager {
 
 	// 아이디 조회
 	private void findId(String id) {
+		this.exist = false;
 		for (int i = 0; i < this.size; i++) {
 			if (id.toString().equals(this.list.get(i).getId().toString())) {// getId 조회용
 				this.exist = true;
