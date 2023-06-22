@@ -47,13 +47,19 @@ public class UserManager {
 	public int leaveUser(int log) {
 		int n = 0;
 		for (User user : this.list) {
+			System.out.println(user.getUserCode());
+			System.out.println(log);
 			if (user.getUserCode() == log) {
+				// 어떻게 삭제해
 				this.list.remove(n);
+				System.out.println(n);
 				System.out.println("삭제완료");
+				break;
 			}
 			n++;
 		}
 		return 0;
+
 	}
 
 	public int loginUser() {// 리턴값으로 보내기

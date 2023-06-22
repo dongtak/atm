@@ -85,32 +85,37 @@ public class Atm {
 			printAlldata(); // 검토용
 			printMenu();
 			int select = inputNumber("메뉴");
-			if (select == JOIN && this.log == 0)
-				userManager.joinUser();
-			else if (select == LEAVE)
-				this.log = userManager.leaveUser(this.log);
-			else if (select == LOGIN && this.log == 0)
-				this.log = userManager.loginUser();
-			else if (select == LOGOUT)
-				this.log = userManager.logoutUser();
-			else if (select == CREATE_ACC)
-				accManager.createAccount(userManager.getUserByUserCode(this.log));
-//			else if(select == DELETE_ACC)
-//				accManager.deleteAcc();
-//			else if(select == VIEW_BALANCE)
-//				accManager.viewBalance();
-//			else if(select == INPUT_MONEY)
-//				accManager.inputMoney();
-//			else if(select == OUT_MONEY)
-//				accManager.outMoney();
-//			else if(select == MOVE_MONEY)
-//				accManager.moveMoney();
-//			else if(select == SAVE_FILE)
-//				fileManager.saveFile();
-//			else if(select == LOAD_FILE)
-//				fileManager.loadFile();
-//			else if(select == QUIT)
-//				break;
+			if (this.log == 0) {
+				if (select == JOIN)
+					userManager.joinUser();
+				else if (select == LOGIN)
+					this.log = userManager.loginUser();
+			} else {
+				if (select == LEAVE)
+					this.log = userManager.leaveUser(this.log);
+
+				else if (select == LOGOUT)
+					this.log = userManager.logoutUser();
+				else if (select == CREATE_ACC)
+					accManager.createAccount(userManager.getUserByUserCode(this.log));
+//				else if(select == DELETE_ACC)
+//					accManager.deleteAcc();
+//				else if(select == VIEW_BALANCE)
+//					accManager.viewBalance();
+//				else if(select == INPUT_MONEY)
+//					accManager.inputMoney();
+//				else if(select == OUT_MONEY)
+//					accManager.outMoney();
+//				else if(select == MOVE_MONEY)
+//					accManager.moveMoney();
+//				else if(select == SAVE_FILE)
+//					fileManager.saveFile();
+//				else if(select == LOAD_FILE)
+//					fileManager.loadFile();
+			}
+
+			if (select == QUIT)
+				break;
 		}
 	}
 
