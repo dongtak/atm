@@ -11,7 +11,7 @@ public class AccountManager {
 	private ArrayList<Account> list = new ArrayList<>();
 
 	private AccountManager() {
-
+		//break;
 	}
 
 	private static AccountManager instance = new AccountManager();
