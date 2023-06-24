@@ -16,7 +16,7 @@ public class AccountManager {
 		return instance;
 	}
 
-	public void createAccount(User user) {
+	public void createAccount(User user) {//계좌생성
 		Account acc = null;
 
 		int accNumber = generateRandomCode();
@@ -33,25 +33,23 @@ public class AccountManager {
 
 	}
 
-	public void deleteAcc(int log) {// 비밀번호 추가할 것==================왜 안돼!!!!!!!!
+	public void deleteAcc(User user) {//계좌 삭제
 		System.out.println("==계좌철회==");
-		Account acc = inputAccNum(log);
+		Account acc = inputAccNum(user.getUserCode());
+		
 		if (acc != null) {
-			System.out.println("삭제");
+//			System.out.println(acc);
+//			System.out.println(this.list.clone()+"클론");//클론도 삭제 되는데 왜 printData에서 출력이 되는지??
 			this.list.remove(acc);
+//			System.out.println(this.list);
+//			System.out.println(this.list.clone()+"클론");
+			System.out.println("삭제");
+			
 		}
 
 	}
 
-	public void viewBalance(int log) {
-		// 보유계좌목록 while
-		// 1
-		// 2
-		// 3
-		// . . . .
-		// 번호 선택 시 해당 계좌잔액 출력
-		// 나가기
-
+	public void viewBalance(int log) {//계좌 확인
 		for (Account acc : this.list) {
 			if (acc.getUserCode() == log) {
 				System.out.println("[" + acc.getAccNumber() + "]" + ":" + acc.getMoney() + "원");
@@ -88,7 +86,7 @@ public class AccountManager {
 
 	}
 
-	public void transferMoney(int log) {
+	public void transferMoney(int log) {//계좌 이체
 		System.out.println("==이체==");
 		Account acc = inputAccNum(log);
 		if (acc != null) {
@@ -206,4 +204,5 @@ public class AccountManager {
 		}
 		return account;
 	}
+
 }

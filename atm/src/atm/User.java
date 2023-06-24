@@ -81,13 +81,17 @@ public class User {
 	
 	@Override
 	public String toString() {
-		String str = String.format("%s(%d) : %s/%s", this.name, this.userCode, this.id, this.password);
 		
-		for(int i=0; i<this.accs.size(); i++) {
-			str += "\n" + this.accs.get(i);
+		if(this.accs!=null) {
+			String str = String.format("%s(%d) : %s/%s", this.name, this.userCode, this.id, this.password);
+			for(int i=0; i<this.accs.size(); i++) {
+				str += "\n" + this.accs.get(i);
+			}
+			return str;
 		}
+		return null;
 		
-		return str;
+		
 	}
 	
 	/*

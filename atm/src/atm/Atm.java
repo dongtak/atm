@@ -78,12 +78,11 @@ public class Atm {
 	private void printAlldata() {
 		for (User user : this.userManager.getList())
 			System.out.println(user);
-
 	}
 
 	public void run() {
 		while (true) {
-			printAlldata(); // 검토용
+//			printAlldata(); // 검토용
 			printMenu();
 			int select = inputNumber("메뉴");
 			if (this.log == 0) {
@@ -99,7 +98,7 @@ public class Atm {
 				else if (select == CREATE_ACC)
 					accManager.createAccount(userManager.getUserByUserCode(this.log));
 				else if (select == DELETE_ACC)
-					accManager.deleteAcc(this.log);
+					accManager.deleteAcc(userManager.getUserByUserCode(this.log));
 				else if (select == VIEW_BALANCE)
 					accManager.viewBalance(this.log);
 				else if (select == DEPOSIT_MONEY)
