@@ -20,9 +20,9 @@ public class Atm {
 	private final int CREATE_ACC = 5;
 	private final int DELETE_ACC = 6;
 	private final int VIEW_BALANCE = 7;
-	private final int INPUT_MONEY = 8;
-	private final int OUT_MONEY = 9;
-	private final int MOVE_MONEY = 10;
+	private final int DEPOSIT_MONEY = 8;
+	private final int WITHDRAW_MONEY = 9;
+	private final int TRANSFER_MONEY = 10;
 	private final int SAVE_FILE = 11;
 	private final int LOAD_FILE = 12;
 	private final int QUIT = 13;
@@ -94,7 +94,6 @@ public class Atm {
 			} else {
 				if (select == LEAVE)
 					this.log = userManager.leaveUser(this.log);
-
 				else if (select == LOGOUT)
 					this.log = userManager.logoutUser();
 				else if (select == CREATE_ACC)
@@ -103,12 +102,12 @@ public class Atm {
 					accManager.deleteAcc(this.log);
 				else if (select == VIEW_BALANCE)
 					accManager.viewBalance(this.log);
-				else if (select == INPUT_MONEY)
-					accManager.inputMoney();
-				else if (select == OUT_MONEY)
-					accManager.outMoney();
-				else if (select == MOVE_MONEY)
-					accManager.moveMoney();
+				else if (select == DEPOSIT_MONEY)
+					accManager.depositMoney(this.log);
+				else if (select == WITHDRAW_MONEY)
+					accManager.withdrawMoney(this.log);
+				else if (select == TRANSFER_MONEY)
+					accManager.transferMoney(this.log);
 //				else if(select == SAVE_FILE)
 //					fileManager.saveFile();
 //				else if(select == LOAD_FILE)
