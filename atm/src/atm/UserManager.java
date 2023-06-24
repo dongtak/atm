@@ -91,7 +91,8 @@ public class UserManager {
 	}
 
 	public ArrayList<User> getList() {
-		return (ArrayList<User>) this.list.clone();
+//		return (ArrayList<User>) this.list.clone();
+		return (ArrayList<User>) this.list;
 	}
 
 	private boolean duplId(String id) {

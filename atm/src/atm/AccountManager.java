@@ -41,7 +41,7 @@ public class AccountManager {
 //			System.out.println(acc);
 //			System.out.println(this.list.clone()+"클론");//클론도 삭제 되는데 왜 printData에서 출력이 되는지??
 			this.list.remove(acc);
-//			System.out.println(this.list);
+			System.out.println(this.list);
 //			System.out.println(this.list.clone()+"클론");
 			System.out.println("삭제");
 			

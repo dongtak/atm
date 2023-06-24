@@ -107,13 +107,13 @@ public class Atm {
 					accManager.withdrawMoney(this.log);
 				else if (select == TRANSFER_MONEY)
 					accManager.transferMoney(this.log);
-//				else if(select == SAVE_FILE)
-//					fileManager.saveFile();
-//				else if(select == LOAD_FILE)
-//					fileManager.loadFile();
-			}
 
-			if (select == QUIT)
+			}
+			if (select == SAVE_FILE)
+				fileManager.saveFile(this.userManager.getList());
+			else if (select == LOAD_FILE)
+				fileManager.loadFile();
+			else if (select == QUIT)
 				break;
 		}
 	}

@@ -71,7 +71,8 @@ public class User {
 	}
 	
 	public ArrayList<Account> getAccs() {
-		return (ArrayList<Account>) this.accs.clone();	// 복제본 제공 
+//		return (ArrayList<Account>) this.accs.clone();	// 복제본 제공 
+		return (ArrayList<Account>) this.accs;	// 복제본 제공 
 	}
 
 	public void setAccs(ArrayList<Account> accs) {
